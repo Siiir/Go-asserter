@@ -1,2 +1,2 @@
 # asserter
- Package for testing purposes. asserter struct does dynamic assertions. Faciliates TC enumeration & debugging.
+ Package for testing purposes. `asserter` struct does dynamic assertions. Facilitates TC enumeration & debugging.
