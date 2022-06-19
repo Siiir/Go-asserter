@@ -1,3 +1,0 @@
-Hasn't been used by me.
-Has passed the full set of tests.
-No docs. Example usage can be in file "Asserter_test.go".

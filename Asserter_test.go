@@ -59,13 +59,14 @@ func Test_asserter(t *testing.T) {
 		})
 	})
 
-	/*This subtest covers asserter members:
-		counter
-	.Counter()
-	.SetCounter(counter)
-		Assert(logical_val) aka .A(...)
-		Inc(ind)
-	.IncLast()
+	/*
+		This subtest covers asserter members:
+			.counter
+			.Counter()
+			.SetCounter(counter)
+			.Assert(logical_val) aka .A(...)
+			.Inc(ind)
+			.IncLast()
 	*/
 	t.Run("{Assertions of `counter` state}", func(t *testing.T) {
 		t.Parallel()
