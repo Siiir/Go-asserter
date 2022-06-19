@@ -1,1 +1,1 @@
-<strong>No docs.</strong> Example usage can be in file "Asserter_test.go".
+Example usage is in file "Asserter_test.go".
