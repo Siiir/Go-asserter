@@ -16,7 +16,7 @@ func (a *Asserter) Inc(ind uint) (indexNotPresentInCounter bool) {
 	return
 }
 
-// Does: a.counter[len(a.counter)-1]++
+// Does:  a.counter[len(a.counter)-1]++
 func (a *Asserter) IncLast() {
 	a.counter[len(a.counter)-1]++
 }

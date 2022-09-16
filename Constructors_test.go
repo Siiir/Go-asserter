@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNew(t *testing.T) {
+func TestAsserter_New(t *testing.T) {
 	fail := func(string) {}
 	counter := make([]uint, 40)
 

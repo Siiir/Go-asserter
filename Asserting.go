@@ -1,28 +1,27 @@
 package asserter
-
 import (
 	"fmt"
-	"strings"
+	"reflect"
 )
 
-// Generates enumeration tag for upcoming assertion case in form
-// "a.b.c....z", where a = a.counter[0], b = a.counter[1], ..., z = a.counter[len(a.counter)-1]
-// Example tags:  "0.0.0", "1.3", "5", "1.1.2"
-func (a *Asserter) GenerateEnumerationTag() string {
-	var sb strings.Builder
-
-	sb.WriteByte('\n')
-	for _, c := range a.counter {
-		sb.WriteString(fmt.Sprint(c))
-		sb.WriteByte('.')
+/*
+	If logical_val==false,
+		passes `a.GenerateFailerMsg()+appendix` to `a.fail`.
+	Increments last subcounter in `a`.
+	Returns `logical_val`.
+*/
+func (a *Asserter) AssertWithFailMsgAppendix(logical_val bool, appendix string) bool {
+	if !logical_val {
+		a.fail(a.GenerateFailerMsg()+appendix)
 	}
 
-	return sb.String()
+	a.IncLast()
+	return logical_val
 }
 
-// Returns a.GenerateEnumerationTag() + " assertion failed!"
-func (a *Asserter) GenerateFailerMsg() (failerMsg string) {
-	return a.GenerateEnumerationTag() + " assertion failed!"
+// Alias for `Asserter.AssertWithFailMsgAppendix`.
+func (a *Asserter) AWFMA(logical_val bool, appendix string) bool {
+	return a.AssertWithFailMsgAppendix(logical_val, appendix)
 }
 
 /*
@@ -40,12 +39,40 @@ func (a *Asserter) Assert(logical_val bool) bool {
 	return logical_val
 }
 
-// Alias for `.assert(logical_val)`.
+// Alias for `.Assert(logical_val)`.
 func (a *Asserter) A(logical_val bool) bool {
 	return a.Assert(logical_val)
 }
 
 /*
-func (a *Asserter) AssertEq
-func (a *Asserter) AE
+	Like `.Assert`,
+	but appends string-printed values of `lhs` and `rhs` in "%v" format
+	to basic fail message.
 */
+func (a *Asserter) AssertEq(lhs any, rhs any) bool{
+	var logical_val= reflect.DeepEqual(lhs, rhs)
+	if !logical_val {
+		var s1,s2= fmt.Sprint(lhs), fmt.Sprint(rhs)
+		var basic_msg string= a.GenerateFailerMsg()
+
+		if s1==s2{
+			basic_msg+= fmt.Sprintf(
+				" %s of type `%T` is not `reflect.DeepEqual` to %s of type `%T`",
+				s1, lhs,
+				s2, rhs,
+			)
+		}else{
+			basic_msg+= fmt.Sprintf(" %s != %s", s1, s2)
+		}
+		a.fail(basic_msg)
+	}
+
+	a.IncLast()
+	return logical_val
+}
+
+// Alias for `.AssertEq(lhs,rhs)`.
+func (a *Asserter) AE(lhs any, rhs any) bool{
+	return a.AssertEq(lhs,rhs)
+}
+
