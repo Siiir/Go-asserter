@@ -21,10 +21,10 @@ func (a *Asserter) IncLast() {
 	a.counter[len(a.counter)-1]++
 }
 
-/*
-func (a *Asserter) Reset() {
+// Zeroes the internal counter.
+func (a *Asserter) ResetCounter() {
 	for i := range a.counter {
 		a.counter[i] = 0
 	}
 }
-*/
+

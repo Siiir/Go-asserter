@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-// `Asserter` has its test in other files.
+// Many `Asserter` functions have their tests in other files.
 func TestAsserter(t *testing.T) {
 	fail := func(string) {}
 
@@ -22,9 +22,21 @@ func TestAsserter(t *testing.T) {
 		t.Parallel()
 
 		// Successful construction
-		a, e := New([]uint{0, 0}, fail)
+		a, e := New([]uint{9, 7}, fail)
 		if e != nil {
 			t.Fatal("e!=nil")
+		}
+
+		{
+			a.ResetCounter()
+			for i,v:= range a.Counter(){
+				if v!=0{
+					t.Fatalf(
+						"After ```a.ResetCounter()``` found value %v at counter index %d .",
+						v, i,
+					)
+				}
+			}
 		}
 
 		// auxialiary function
@@ -66,6 +78,8 @@ func TestAsserter(t *testing.T) {
 			a.AssertEq(8.9,7.1); assert_counter_eq([]uint{1, 6})
 			a.AssertEq(false,false); assert_counter_eq([]uint{1, 7})
 			a.AE(8,8.0); assert_counter_eq([]uint{1, 8})
+
+			a.IncLast(); assert_counter_eq([]uint{1, 9})
 		}
 	})
 }
@@ -107,6 +121,9 @@ func ExampleAsserter() {
 		a.AE(8,8.0)
 	}
 
+	a.ResetCounter()
+	a.AE("abc",nil)
+
 	// Output:
 	// 0.0. assertion failed!
 	// 1.0. assertion failed!
@@ -115,7 +132,9 @@ func ExampleAsserter() {
 	// 3.1. assertion failed!my msg appendix.
 	// 3.2. assertion failed! 8.9 != 7.1
 	// 3.4. assertion failed! 8 of type `int` is not `reflect.DeepEqual` to 8 of type `float64`
+	// 0.0. assertion failed! abc != <nil>
 }
 
 // func TestEmptyCounter(t *testing.T) ommited, because the whole implementation is obvious.
+
 // func TestNilFail(t *testing.T) ommited, because implementation is obvious.

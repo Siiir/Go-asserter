@@ -42,7 +42,7 @@ func (a *Asserter) SetCounter(counter []uint) error {
 */
 func (a *Asserter) SetFail(fail func(failerMsg string)) error {
 	if fail == nil {
-		return (NilFailError{})
+		return NilFailError{}
 	}
 	a.fail = fail
 	return nil
