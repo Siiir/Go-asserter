@@ -1,4 +1,4 @@
-module github.com/Siiir/asserter
+module github.com/Siiir/asserter/v2
 
 go 1.18
 
