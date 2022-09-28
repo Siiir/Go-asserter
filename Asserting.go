@@ -1,4 +1,5 @@
 package asserter
+
 import (
 	"fmt"
 	"reflect"
@@ -12,7 +13,7 @@ import (
 */
 func (a *Asserter) AssertWithFailMsgAppendix(logical_val bool, appendix string) bool {
 	if !logical_val {
-		a.fail(a.GenerateFailerMsg()+appendix)
+		a.fail(a.GenerateFailerMsg() + appendix)
 	}
 
 	a.IncLast()
@@ -49,20 +50,20 @@ func (a *Asserter) A(logical_val bool) bool {
 	but appends string-printed values of `lhs` and `rhs` in "%v" format
 	to basic fail message.
 */
-func (a *Asserter) AssertEq(lhs any, rhs any) bool{
-	var logical_val= reflect.DeepEqual(lhs, rhs)
+func (a *Asserter) AssertEq(lhs any, rhs any) bool {
+	var logical_val = reflect.DeepEqual(lhs, rhs)
 	if !logical_val {
-		var s1,s2= fmt.Sprint(lhs), fmt.Sprint(rhs)
-		var basic_msg string= a.GenerateFailerMsg()
+		var s1, s2 = fmt.Sprint(lhs), fmt.Sprint(rhs)
+		var basic_msg string = a.GenerateFailerMsg()
 
-		if s1==s2{
-			basic_msg+= fmt.Sprintf(
+		if s1 == s2 {
+			basic_msg += fmt.Sprintf(
 				" %s of type `%T` is not `reflect.DeepEqual` to %s of type `%T`",
 				s1, lhs,
 				s2, rhs,
 			)
-		}else{
-			basic_msg+= fmt.Sprintf(" %s != %s", s1, s2)
+		} else {
+			basic_msg += fmt.Sprintf(" %s != %s", s1, s2)
 		}
 		a.fail(basic_msg)
 	}
@@ -72,7 +73,6 @@ func (a *Asserter) AssertEq(lhs any, rhs any) bool{
 }
 
 // Alias for `.AssertEq(lhs,rhs)`.
-func (a *Asserter) AE(lhs any, rhs any) bool{
-	return a.AssertEq(lhs,rhs)
+func (a *Asserter) AE(lhs any, rhs any) bool {
+	return a.AssertEq(lhs, rhs)
 }
-

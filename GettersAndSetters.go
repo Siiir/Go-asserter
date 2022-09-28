@@ -31,6 +31,12 @@ func (a *Asserter) SetCounter(counter []uint) error {
 	return nil
 }
 
+// Mad version of `SetCounter(counter)`. Panic on error − not returning it.
+func (a *Asserter) PSetCounter(counter []uint) {
+	e := a.SetCounter(counter)
+	onErrPanic(e)
+}
+
 /*
 	Description:
 
@@ -46,4 +52,10 @@ func (a *Asserter) SetFail(fail func(failerMsg string)) error {
 	}
 	a.fail = fail
 	return nil
+}
+
+// Mad version of `SetFail(fail)`. Panic on error − not returning it.
+func (a *Asserter) PSetFail(fail func(failerMsg string)) {
+	e := a.SetFail(fail)
+	onErrPanic(e)
 }
