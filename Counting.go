@@ -2,7 +2,8 @@ package asserter
 
 /*
 	If possible, does a.counter[ind]++ and returns false.
-	Otherwise returns true
+
+	Otherwise returns true.
 */
 func (a *Asserter) Inc(ind uint) (indexNotPresentInCounter bool) {
 	if uint(len(a.counter)) <= ind {
@@ -16,7 +17,10 @@ func (a *Asserter) Inc(ind uint) (indexNotPresentInCounter bool) {
 	return
 }
 
-// Does:  a.counter[len(a.counter)-1]++
+/*
+	Description:
+		a.counter[len(a.counter)-1]++
+*/
 func (a *Asserter) IncLast() {
 	a.counter[len(a.counter)-1]++
 }
@@ -27,4 +31,3 @@ func (a *Asserter) ResetCounter() {
 		a.counter[i] = 0
 	}
 }
-

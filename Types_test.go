@@ -29,8 +29,8 @@ func TestAsserter(t *testing.T) {
 
 		{
 			a.ResetCounter()
-			for i,v:= range a.Counter(){
-				if v!=0{
+			for i, v := range a.Counter() {
+				if v != 0 {
 					t.Fatalf(
 						"After ```a.ResetCounter()``` found value %v at counter index %d .",
 						v, i,
@@ -69,17 +69,21 @@ func TestAsserter(t *testing.T) {
 			a.Inc(1)
 			assert_counter_eq([]uint{1, 3})
 
-			a.AssertWithFailMsgAppendix(true," my not-displayed msg appendix.")
+			a.AssertWithFailMsgAppendix(true, " my not-displayed msg appendix.")
 			assert_counter_eq([]uint{1, 4})
 
-			a.AWFMA(false," my msg appendix.")
+			a.AWFMA(false, " my msg appendix.")
 			assert_counter_eq([]uint{1, 5})
 
-			a.AssertEq(8.9,7.1); assert_counter_eq([]uint{1, 6})
-			a.AssertEq(false,false); assert_counter_eq([]uint{1, 7})
-			a.AE(8,8.0); assert_counter_eq([]uint{1, 8})
+			a.AssertEq(8.9, 7.1)
+			assert_counter_eq([]uint{1, 6})
+			a.AssertEq(false, false)
+			assert_counter_eq([]uint{1, 7})
+			a.AE(8, 8.0)
+			assert_counter_eq([]uint{1, 8})
 
-			a.IncLast(); assert_counter_eq([]uint{1, 9})
+			a.IncLast()
+			assert_counter_eq([]uint{1, 9})
 		}
 	})
 }
@@ -91,8 +95,10 @@ func ExampleAsserter() {
 	}
 
 	// Assetions before a.Inc(0).
-	// Enumeration tags be like: 0.x
-	a.Assert(false)
+	{
+		// Enumeration tags be like: 0.x
+		a.Assert(false)
+	}
 
 	// The first pack of assertions.
 	{
@@ -114,15 +120,15 @@ func ExampleAsserter() {
 	// The fird pack of assertions.
 	{
 		a.Inc(0) // Enumeration tags be like: 3.x
-		a.AssertWithFailMsgAppendix(true,"my not-displayed msg appendix.")
-		a.AWFMA(false,"my msg appendix.")
-		a.AssertEq(8.9,7.1)
-		a.AssertEq(false,false)
-		a.AE(8,8.0)
+		a.AssertWithFailMsgAppendix(true, "my not-displayed msg appendix.")
+		a.AWFMA(false, "my msg appendix.")
+		a.AssertEq(8.9, 7.1)
+		a.AssertEq(false, false)
+		a.AE(8, 8.0)
 	}
 
 	a.ResetCounter()
-	a.AE("abc",nil)
+	a.AE("abc", nil)
 
 	// Output:
 	// 0.0. assertion failed!

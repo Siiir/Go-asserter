@@ -2,6 +2,7 @@ package asserter
 
 import "fmt"
 
+// Returns true if `lhs` & `rhs` are semantically equal.
 func (lhs *Asserter) Eq(rhs *Asserter) bool {
 	var lhs_c, rhs_c = lhs.counter, rhs.counter
 	if len(lhs_c) != len(rhs_c) {

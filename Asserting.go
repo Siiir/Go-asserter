@@ -6,9 +6,11 @@ import (
 )
 
 /*
-	If logical_val==false,
-		passes `a.GenerateFailerMsg()+appendix` to `a.fail`.
+	If `logical_va`=false,
+	passes ```a.GenerateFailerMsg() + appendix``` to `a.fail`.
+
 	Increments last subcounter in `a`.
+
 	Returns `logical_val`.
 */
 func (a *Asserter) AssertWithFailMsgAppendix(logical_val bool, appendix string) bool {
@@ -26,9 +28,11 @@ func (a *Asserter) AWFMA(logical_val bool, appendix string) bool {
 }
 
 /*
-	If logical_val==false,
-		passes `a.GenerateFailerMsg()` to `a.fail`.
+	If `logical_val`=false,
+	passes `a.GenerateFailerMsg()` to `a.fail(failerMsg)`.
+
 	Increments last subcounter in `a`.
+
 	Returns `logical_val`.
 */
 func (a *Asserter) Assert(logical_val bool) bool {
@@ -48,7 +52,12 @@ func (a *Asserter) A(logical_val bool) bool {
 /*
 	Like `.Assert`,
 	but appends string-printed values of `lhs` and `rhs` in "%v" format
-	to basic fail message.
+	to basic fail message, explaining they are different.
+
+	Being an inteligent function,
+	it can decice to also append some other descriptions of `lhs` & `rhs` objects
+	(eg. their types).
+	This happens when both values look misleadingly similar in "%v" format.
 */
 func (a *Asserter) AssertEq(lhs any, rhs any) bool {
 	var logical_val = reflect.DeepEqual(lhs, rhs)
